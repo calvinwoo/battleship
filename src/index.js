@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter as Router, Route, Link } from 'react-router-dom';
-
+import './board-service';
 import Join from './components/Join';
 import Room from './components/Room';
 
