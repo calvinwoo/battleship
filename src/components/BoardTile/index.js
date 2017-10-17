@@ -17,12 +17,16 @@ export default ({ onClick, isOwnShip, isEnemyShip, isAttacked, isActive }) => {
       onClick={onClick}
     >
       <span className="fa-stack">
-        {(isOwnShip || (isAttacked && isEnemyShip)) && (
-          <i className="fa fa-stack-1x fa-ship" />
+        {isOwnShip && (
+          <i className="fa fa-stack-2x fa-ship text-primary" />
+        )}
+
+        {(isAttacked && isEnemyShip) && (
+          <i className="fa fa-stack-2x fa-ship text-warning" />
         )}
 
         {isAttacked && (
-          <i className="fa fa-stack-2x fa-times" />
+          <i className="fa fa-stack-2x fa-times text-danger" />
         )}
       </span>
     </button>
