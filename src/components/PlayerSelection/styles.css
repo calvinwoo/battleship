@@ -1,0 +1,5 @@
+.player-selection {
+  & .btn {
+    margin-right: 10px;
+  }
+}

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { listen, unlisten, attack, restartGame, checkWinner } from '../../board-service';
 import PlayerSelection from '../PlayerSelection';
 import GameBoard from '../GameBoard';
+import './styles.css';
 
 export default class Room extends Component {
   constructor(props) {
@@ -67,7 +68,7 @@ export default class Room extends Component {
 
     return (
       <div className="room">
-        <h1>Room {roomId}</h1>
+        <h4>Room {roomId}</h4>
         {renderContent()}
         <button className="btn btn-outline-secondary" onClick={() => restartGame(roomId)}>
           Restart Game

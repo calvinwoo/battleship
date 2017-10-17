@@ -1,0 +1,5 @@
+.room {
+  & .btn-outline-secondary {
+    margin-top: 20px;
+  }
+}

@@ -1,9 +1,10 @@
 import React from 'react';
+import './styles.css';
 
 export default ({ handleSelectOne, handleSelectTwo }) => {
   return (
     <div className="player-selection">
-      <h2>Select player</h2>
+      <h4>Select player:</h4>
       <button className="btn btn-outline-primary" onClick={handleSelectOne}>
         Player One
       </button>

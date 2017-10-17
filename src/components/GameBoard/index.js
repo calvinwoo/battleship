@@ -33,10 +33,10 @@ export default ({ boardState, playerType, handleAttack }) => {
 
   return (
     <div className="game-board">
-      <h2>
+      <h4>
         Playing as:
         {playerType === 'player1' ? ' Player 1' : ' Player 2'}
-      </h2>
+      </h4>
       <table>
         <tbody>
           {renderRows()}
