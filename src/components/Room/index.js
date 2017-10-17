@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { listen, unlisten } from '../../board-service';
+import { listen, unlisten, attack } from '../../board-service';
+import PlayerSelection from '../PlayerSelection';
+import GameBoard from '../GameBoard';
 
 export default class Room extends Component {
   constructor(props) {
@@ -35,9 +37,29 @@ export default class Room extends Component {
   }
 
   render() {
+    const renderContent = () => {
+      if (!this.state.playerType) {
+        return (
+          <PlayerSelection
+            handleSelectOne={() => this.setState({ playerType: 'player1' })}
+            handleSelectTwo={() => this.setState({ playerType: 'player2' })}
+          />
+        );
+      }
+
+      return (
+        <GameBoard
+          boardState={this.state.boardState}
+          playerType={this.state.playerType}
+          handleAttack={(attackPosition) => this.setState({ boardState: attack(this.state.boardState, attackPosition) })}
+        />
+      );
+    };
+
     return (
       <div className="room">
         Room {this.props.match.params.roomId}
+        {renderContent()}
       </div>
     );
   }

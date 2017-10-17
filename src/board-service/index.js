@@ -17,9 +17,16 @@ const createInitialBoardState = () => {
   return {
     player1Board: [[0, 1], [2, 12], [3, 13]],
     player2Board: [[10, 11], [98, 99], [55, 65]],
-    player1Attacks: [],
-    player2Attacks: [],
+    attack: [],
     turn: 'player1'
+  };
+};
+
+export const attack = (boardState, position) => {
+  return {
+    ...boardState,
+    turn: boardState.turn === 'player1' ? 'player2' : 'player1',
+    attacks: (boardState.attacks || []).concat(position)
   };
 };
 
