@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { listen, unlisten, attack, restartGame } from '../../board-service';
+import { listen, unlisten, attack, restartGame, checkWinner } from '../../board-service';
 import PlayerSelection from '../PlayerSelection';
 import GameBoard from '../GameBoard';
 
@@ -38,6 +38,13 @@ export default class Room extends Component {
   render() {
     const roomId = this.props.match.params.roomId;
     const renderContent = () => {
+      const winner = checkWinner(this.state.boardState);
+      if (winner) {
+        const text = winner === 'player1' ? 'Player 1' : 'Player 2';
+
+        return <h1>{`${text} Wins!`}</h1>;
+      }
+
       if (!this.state.playerType) {
         return (
           <PlayerSelection

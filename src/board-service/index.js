@@ -1,4 +1,5 @@
 import * as firebase from 'firebase';
+import { intersection } from 'lodash';
 
 const config = {
   apiKey: 'AIzaSyCmvQ5x2U87UIIhNbw84E06yjiYWgfS0ck',
@@ -42,6 +43,23 @@ const createInitialBoardState = () => {
 export const restartGame = (roomId) => {
   const ref = database.ref(`rooms/${roomId}`);
   return ref.set(createInitialBoardState());
+};
+
+export const checkWinner = (boardState) => {
+  if (!boardState) {
+    return undefined;
+  }
+
+  const player1Tiles = boardState.player1Board.reduce((a, b) => a.concat(b), []);
+  const player2Tiles = boardState.player2Board.reduce((a, b) => a.concat(b), []);
+
+  if (intersection(boardState.attacks, player1Tiles).length === player1Tiles.length) {
+    return 'player2';
+  }
+
+  if (intersection(boardState.attacks, player2Tiles).length === player2Tiles.length) {
+    return 'player1';
+  }
 };
 
 export const attack = (boardState, roomId, position) => {
