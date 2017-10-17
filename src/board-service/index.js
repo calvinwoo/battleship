@@ -14,12 +14,34 @@ firebase.initializeApp(config);
 const database = firebase.database();
 
 const createInitialBoardState = () => {
+  const addRandomShips = (ships) => {
+    while (ships.length < 6) {
+      const randomIndex = Math.floor(Math.random() * 25);
+      let secondIndex = randomIndex + (Math.random() < 0.5 ? -1 : 1) * (Math.random() < 0.5 ? 5 : 1);
+      const isRepeat = ships.some((ship) => ship.includes(randomIndex) || ship.includes(secondIndex));
+      const isDisconnected = [randomIndex, secondIndex].every((index) => (index + 1) % 5 === 0 || index % 5 === 0);
+      const isOffBoard = [randomIndex, secondIndex].some((index) => index < 0 || index > 24);
+
+      if (!isRepeat && !isDisconnected && !isOffBoard) {
+        ships.push([randomIndex, secondIndex]);
+      }
+    }
+  };
+
+  const ships = [];
+  addRandomShips(ships);
+
   return {
-    player1Board: [[0, 1], [2, 12], [3, 13]],
-    player2Board: [[10, 11], [98, 99], [55, 65]],
+    player1Board: ships.slice(0, 3),
+    player2Board: ships.slice(3, 6),
     attacks: [],
     turn: 'player1'
   };
+};
+
+export const restartGame = (roomId) => {
+  const ref = database.ref(`rooms/${roomId}`);
+  return ref.set(createInitialBoardState());
 };
 
 export const attack = (boardState, roomId, position) => {
@@ -33,7 +55,7 @@ export const listen = async (roomId, callback) => {
   const data = (await ref.once('value')).val();
 
   if (!data) {
-    await ref.set(createInitialBoardState());
+    await restartGame(roomId);
   }
 
   ref.on('value', callback);

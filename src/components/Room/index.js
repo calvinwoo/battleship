@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { listen, unlisten, attack } from '../../board-service';
+import { listen, unlisten, attack, restartGame } from '../../board-service';
 import PlayerSelection from '../PlayerSelection';
 import GameBoard from '../GameBoard';
 
@@ -15,7 +15,6 @@ export default class Room extends Component {
   }
 
   handleBoardChange(dataSnapshot) {
-    console.log(dataSnapshot.val());
     this.setState({ boardState: dataSnapshot.val() });
   }
 
@@ -37,6 +36,7 @@ export default class Room extends Component {
   }
 
   render() {
+    const roomId = this.props.match.params.roomId;
     const renderContent = () => {
       if (!this.state.playerType) {
         return (
@@ -47,7 +47,7 @@ export default class Room extends Component {
         );
       }
 
-      const handleAttack = (attackPosition) => attack(this.state.boardState, this.props.match.params.roomId, attackPosition);
+      const handleAttack = (attackPosition) => attack(this.state.boardState, roomId, attackPosition);
 
       return (
         <GameBoard
@@ -60,8 +60,11 @@ export default class Room extends Component {
 
     return (
       <div className="room">
-        <h1>Room {this.props.match.params.roomId}</h1>
+        <h1>Room {roomId}</h1>
         {renderContent()}
+        <button className="btn btn-outline-secondary" onClick={() => restartGame(roomId)}>
+          Restart Game
+        </button>
       </div>
     );
   }

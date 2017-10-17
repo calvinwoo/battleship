@@ -6,11 +6,11 @@ export default ({ boardState, playerType, handleAttack }) => {
   const enemyShips = playerType === 'player2' ? boardState.player1Board : boardState.player2Board;
 
   const renderRows = () => {
-    return [...Array(10).keys()].map((row) => (
+    return [...Array(5).keys()].map((row) => (
       <tr key={row}>
         {
-          [...Array(10).keys()].map((column) => {
-            const index = row * 10 + column;
+          [...Array(5).keys()].map((column) => {
+            const index = row * 5 + column;
             const isOwnShip = ships.some((ship) => ship.includes(index));
             const isEnemyShip = enemyShips.some((ship) => ship.includes(index));
             const isAttacked = (boardState.attacks || []).includes(index);
