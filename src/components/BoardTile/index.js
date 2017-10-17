@@ -2,12 +2,13 @@ import React from 'react';
 import classNames from 'classNames';
 import './styles.css';
 
-export default ({ onClick, isOwnShip, isEnemyShip, isAttacked }) => {
+export default ({ onClick, isOwnShip, isEnemyShip, isAttacked, isActive }) => {
   const className = classNames({
     'board-tile': true,
     'own-ship': isOwnShip,
     'enemy-ship': isEnemyShip,
-    'attacked': isAttacked
+    'attacked': isAttacked,
+    'active': isActive
   });
 
   return (

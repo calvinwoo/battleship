@@ -1,3 +1,7 @@
 .board-tile {
+  pointer-events: none;
 
+  &.active {
+    pointer-events: auto;
+  }
 }

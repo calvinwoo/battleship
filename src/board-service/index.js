@@ -64,8 +64,9 @@ export const checkWinner = (boardState) => {
 
 export const attack = (boardState, roomId, position) => {
   const attacks = (boardState.attacks || []).concat(position);
-  const ref = database.ref(`rooms/${roomId}/attacks`);
-  return ref.set(attacks);
+  const turn = boardState.turn === 'player1' ? 'player2' : 'player1';
+  const ref = database.ref(`rooms/${roomId}/`);
+  return ref.update({ turn, attacks });
 };
 
 export const listen = async (roomId, callback) => {

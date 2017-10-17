@@ -14,6 +14,7 @@ export default ({ boardState, playerType, handleAttack }) => {
             const isOwnShip = ships.some((ship) => ship.includes(index));
             const isEnemyShip = enemyShips.some((ship) => ship.includes(index));
             const isAttacked = (boardState.attacks || []).includes(index);
+            const onClick = () => handleAttack(index);
 
             return (
               <td key={column}>
@@ -21,7 +22,8 @@ export default ({ boardState, playerType, handleAttack }) => {
                   isOwnShip={isOwnShip}
                   isEnemyShip={isEnemyShip}
                   isAttacked={isAttacked}
-                  onClick={() => handleAttack(index)}
+                  onClick={onClick}
+                  isActive={playerType === boardState.turn}
                 />
               </td>
             );
@@ -31,12 +33,16 @@ export default ({ boardState, playerType, handleAttack }) => {
     ));
   };
 
+  const renderInstructions = () => {
+    if (playerType !== boardState.turn) {
+      return <h4>Waiting for opposing player...</h4>;
+    }
+    return <h4>Click a tile to attack!</h4>
+  };
+
   return (
     <div className="game-board">
-      <h4>
-        Playing as:
-        {playerType === 'player1' ? ' Player 1' : ' Player 2'}
-      </h4>
+      {renderInstructions()}
       <table>
         <tbody>
           {renderRows()}

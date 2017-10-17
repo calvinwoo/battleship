@@ -58,11 +58,17 @@ export default class Room extends Component {
       const handleAttack = (attackPosition) => attack(this.state.boardState, roomId, attackPosition);
 
       return (
-        <GameBoard
-          boardState={this.state.boardState}
-          playerType={this.state.playerType}
-          handleAttack={handleAttack}
-        />
+        <div>
+          <h4>
+            Playing as:
+            {this.state.playerType === 'player1' ? ' Player 1' : ' Player 2'}
+          </h4>
+          <GameBoard
+            boardState={this.state.boardState}
+            playerType={this.state.playerType}
+            handleAttack={handleAttack}
+          />
+        </div>
       );
     };
 
