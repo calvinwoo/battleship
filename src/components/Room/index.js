@@ -47,18 +47,20 @@ export default class Room extends Component {
         );
       }
 
+      const handleAttack = (attackPosition) => attack(this.state.boardState, this.props.match.params.roomId, attackPosition);
+
       return (
         <GameBoard
           boardState={this.state.boardState}
           playerType={this.state.playerType}
-          handleAttack={(attackPosition) => this.setState({ boardState: attack(this.state.boardState, attackPosition) })}
+          handleAttack={handleAttack}
         />
       );
     };
 
     return (
       <div className="room">
-        Room {this.props.match.params.roomId}
+        <h1>Room {this.props.match.params.roomId}</h1>
         {renderContent()}
       </div>
     );

@@ -7,7 +7,7 @@ import Room from './components/Room';
 
 const Base = () => (
   <Router>
-    <div>
+    <div className="container">
       <Route exact path='/' component={Join} />
       <Route path='/room/:roomId' component={Room} />
     </div>
