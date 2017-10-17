@@ -13,12 +13,22 @@ firebase.initializeApp(config);
 
 const database = firebase.database();
 
+const createInitialBoardState = () => {
+  return {
+    player1Board: [[0, 1], [2, 12], [3, 13]],
+    player2Board: [[10, 11], [98, 99], [55, 65]],
+    player1Attacks: [],
+    player2Attacks: [],
+    turn: 'player1'
+  };
+};
+
 export const listen = async (roomId, callback) => {
   const ref = database.ref(`rooms/${roomId}`);
   const data = (await ref.once('value')).val();
 
   if (!data) {
-    await ref.set([1, 2, 3]);
+    await ref.set(createInitialBoardState());
   }
 
   ref.on('value', callback);

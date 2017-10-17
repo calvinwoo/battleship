@@ -4,18 +4,26 @@ import { listen, unlisten } from '../../board-service';
 export default class Room extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      boardState: undefined,
+      playerType: undefined
+    };
 
     this.handleBoardChange = this.handleBoardChange.bind(this);
   }
 
   handleBoardChange(dataSnapshot) {
     console.log(dataSnapshot.val());
+    this.setState({ boardState: dataSnapshot.val() });
   }
 
   componentDidUpdate(prevProps) {
-    unlisten(prevProps.match.params.roomId, this.handleBoardChange);
-    listen(this.props.match.params.roomId, this.handleBoardChange);
+    const prevRoomId = prevProps.match.params.roomId;
+    const roomId = this.props.match.params.roomId;
+    if (prevRoomId !== roomId) {
+      unlisten(prevRoomId, this.handleBoardChange);
+      listen(roomId, this.handleBoardChange);
+    }
   }
 
   componentDidMount() {
