@@ -1,9 +1,29 @@
 import React from 'react';
+import classNames from 'classNames';
+import './styles.css';
 
-export default ({ onClick }) => {
+export default ({ onClick, isOwnShip, isEnemyShip, isAttacked }) => {
+  const className = classNames({
+    'board-tile': true,
+    'own-ship': isOwnShip,
+    'enemy-ship': isEnemyShip,
+    'attacked': isAttacked
+  });
+
   return (
-    <button className="board-tile" onClick={onClick}>
-      o
+    <button
+      className={className}
+      onClick={onClick}
+    >
+      <span className="fa-stack">
+        {(isOwnShip || (isAttacked && isEnemyShip)) && (
+          <i className="fa fa-stack-1x fa-ship" />
+        )}
+
+        {isAttacked && (
+          <i className="fa fa-stack-2x fa-times" />
+        )}
+      </span>
     </button>
   );
 };

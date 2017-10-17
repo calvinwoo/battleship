@@ -17,7 +17,7 @@ const createInitialBoardState = () => {
   return {
     player1Board: [[0, 1], [2, 12], [3, 13]],
     player2Board: [[10, 11], [98, 99], [55, 65]],
-    attack: [],
+    attacks: [],
     turn: 'player1'
   };
 };
